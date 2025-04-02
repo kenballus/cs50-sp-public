@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 0: `vec3`
+# Assignment 0: `vec3`, Due Tuesday, April 8 at 11:59:59 PM
 
 Your task in this assignment is to build a simple 3D vector library based on the following struct:
 ```C
@@ -31,12 +31,15 @@ That means your `vec3.h` cannot contain any `#include`s, and your `vec3.c` canno
 
 You do not need to handle integer overflow or underflow.
 
-## What to Submit
+## Submitting
 
+Before the deadline, please send an email to `benjamin.p.kallus.gr@dartmouth.edu` with the following 2 files attached:
 - `vec3.c`
     - Contains implementations of all of the functions listed above.
 - `vec3.h`
     - Contains declarations of all of the functions listed above, as well as the definition of `struct vec3`.
+
+If you ever have trouble meeting a deadline, it's likely that I can offer an extension, so long as you let me know at least 24 hours before the deadline.
 
 ## Testing
 

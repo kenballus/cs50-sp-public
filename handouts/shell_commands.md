@@ -14,6 +14,10 @@ geometry: margin=1in
     - Flags:
         - `-i some_private_key`
             - Uses the specified private key (identity file) instead of the default private key.
+- `scp`
+    - Purpose: Copies files to and from remote systems.
+    - Example `scp bkallus@plink.cs.dartmouth.edu:cs50-sp-public/handouts/shell_commands.md .`
+        - Copies this file from `plink` to my local machine.
 
 ## Filesystem Interaction
 
@@ -72,6 +76,9 @@ geometry: margin=1in
     - Purpose: Prints its arguments.
 - `btop`
     - Purpose: Displays system resource usage information with a pretty UI.
+- `git clone`
+    - Purpose: Copies a remote Git repostiory to the current working directory
+    - Example: `git clone https://github.com/kenballus/cs50-sp-public`
 
 ## Typesetting
 
