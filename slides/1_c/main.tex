@@ -1,0 +1,211 @@
+\documentclass[hyphens,aspectratio=169,dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textcomp}
+\usepackage{moresize}
+\usepackage{framed}
+\usepackage{minted}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usetheme{Berlin}
+\usecolortheme[RGB={0,95,47}]{structure}
+\beamertemplatenavigationsymbolsempty
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\newcommand{\textpf}[1]{\texttt{\color{black}\fcolorbox{lightgray}{lightgray}{#1}}}
+
+\begin{document}
+
+\begin{frame}[fragile]{CS 94}
+    \begin{center} Intro to Systems Programming \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{About C}
+    \pause C is
+    \begin{itemize}
+        \pause \item fast \pause (if you know what you're doing),
+        \pause \item portable \pause (if you know what you're doing),
+        \pause \item low-level \pause (useful for ``close-to-the-metal" tasks),
+        \pause \item old \pause (nearly everything depends on C in some way),
+        \pause \item unsafe, \pause (unless you \textbf{really} know what you're doing).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{A Simple C Program}
+    Please copy down this C program into a file named \textpf{simple.c} on \textpf{plink}:
+    \inputminted{c}{./simple.c}
+\end{frame}
+
+\begin{frame}[fragile]{Explanation of \textpf{simple.c}}
+    \begin{itemize}
+        \pause \item \textpf{int}
+            \begin{itemize}
+                \pause \item The return type of the \textpf{main} function.
+            \end{itemize}
+        \pause \item \textpf{main}
+            \begin{itemize}
+                \pause \item The name of the \textpf{main} function.
+            \end{itemize}
+        \pause \item \textpf{(void)}
+            \begin{itemize}
+                \pause \item Indicates that \textpf{main} takes no arguments.
+                \pause \item You might expect that empty parentheses would indicate no arguments, but it actually indicates that the function accepts any number of arguments, and ignores them all.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Machine Code}
+    \begin{itemize}
+        \pause \item A computer's native language is known as ``machine code."
+        \pause \item At the very bottom, your CPU's primary job is to interpret machine code.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Interpreted Languages}
+    \begin{itemize}
+        \pause \item When you run a Python program, the Python interpreter translates your program into machine code at runtime.
+        \pause \item This incurs runtime overhead.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Compiled Languages}
+    \begin{itemize}
+        \pause \item In order to run a program written in a compiled language, you need to translate it into machine code ahead of time.
+        \pause \item This process is known as ``compilation."
+        \pause \item C is a compiled language.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Building C Programs}
+    There are 4 tools required to turn \textpf{simple.c} into an executable:
+    \begin{enumerate}
+        \pause \item The C preprocessor, which evaluates special ``directives," which I'll explain later.
+        \pause \item The C compiler, which translates the output of the preprocessor into assembly.
+        \pause \item The assembler, which translates assembly into machine code in the \textpf{.o} format.
+        \pause \item The linker, which produces an executable or library from \textpf{.o} file(s).
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{The Compiler Driver}
+    \begin{itemize}
+        \pause \item A C compiler driver is a program that invokes the preprocessor, compiler, assembler, and linker for us, so that we can build C programs all in one step.
+        \pause \item There are 2 compiler drivers installed on \textpf{plink}: \textpf{clang} and \textpf{gcc}.
+        \pause \item Most of the time, these can be used interchangeably. Try both!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Running the Compiler Driver}
+    \begin{itemize}
+        \pause \item To use \textpf{gcc} to build \textpf{simple.c}, run
+        \begin{verbatim}
+            gcc ./simple.c
+        \end{verbatim}
+        \pause \item You should now have an executable named ``\textpf{a.out}"
+        \pause \item To execute \textpf{a.out}, run
+        \begin{verbatim}
+            ./a.out
+        \end{verbatim}
+        \pause \item To see the returned value from \textpf{main}, run
+        \begin{verbatim}
+            echo "$?"
+        \end{verbatim}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Integer Types in C}
+    There are 4 basic integer types in C:
+    \begin{itemize}
+        \pause \item \textpf{char} (smallest),
+        \pause \item \textpf{short} (small),
+        \pause \item \textpf{int} (medium),
+        \pause \item \textpf{long} (large).
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Integer Sizes}
+    \begin{itemize}
+        \pause \item C is designed for portability, so the language standard doesn't specify the number of bytes required to store each of the integer types.
+        \pause \item For this reason, we need the \textpf{sizeof} operator.
+        \pause \item The \textpf{sizeof} operator returns the number of bytes used to represent its operand.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity \#1}
+    Modify \textpf{simple.c} to determine the sizes of the 4 basic integer types on \textpf{plink}.
+\end{frame}
+
+\begin{frame}[fragile]{Signedness}
+    \begin{itemize}
+        \pause \item All integers in C are either \textpf{signed} or \textpf{unsigned}.
+        \pause \item Unsigned integers can only represent nonnegative values.
+        \pause \item Signed integers can represent both negative and nonnegative values.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Why would we ever want to use unsigned integers?}
+    \begin{itemize}
+        \pause \item When they better match the problem domain.
+            \begin{itemize}
+                \pause \item e.g., quantities, timestamps, etc.
+            \end{itemize}
+        \pause \item The positive range is larger!
+            \begin{itemize}
+                \pause \item The largest value that an \textpf{unsigned int} can store is greater than the largest value that a \textpf{signed int} can store.
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Integer Ranges}
+    \begin{itemize}
+        \pause \item 1 bit can store one of $2^1 = 2$ distinct values: \textpf{0} or \textpf{1}.
+        \pause \item 2 bits can store one of $2^2 = 4$ distinct bitstrings: \textpf{00}, \textpf{01}, \textpf{10}, or \textpf{11}.
+        \pause \item Therefore, \textpf{char}, which is a 1-byte (8-bit) integer type, can store one of $2^8 = 256$ distinct bitstrings.
+        \pause \item For \textpf{unsigned char}, we treat those bitstrings as representing $0$-$255$, inclusive.
+        \pause \item For \textpf{signed char}, we treat those bitstrings as representing $-128$-$127$, inclusive.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity \#2}
+    Write a C function, \textpf{unsigned char my\_sub(unsigned char x, unsigned char y)}, \\that returns the difference between \textpf{x} and \textpf{y}.
+
+    \begin{itemize}
+        \pause \item Test your function on a wide range of inputs. Does it do what you expect?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity \#3}
+    \begin{center} Write a C function, \textpf{my\_abs(signed char x)}, that returns the absolute value of \textpf{x}. \end{center}
+
+    \begin{itemize}
+        \pause \item What should your function's return type should be?
+            \begin{itemize}
+                \pause \item \textpf{char}, \textpf{short}, \textpf{int}, or \textpf{long}?
+                \pause \item \textpf{signed} or \textpf{unsigned}?
+            \end{itemize}
+        \pause \item Test your function on a wide range of inputs. Does it always work?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity \#4}
+    \begin{center} Write a C function, \textpf{my\_log2(unsigned long x)}, that returns the $\log_2$ of \textpf{x}. \end{center}
+
+    \begin{itemize}
+        \pause \item What should your function's return type should be?
+            \begin{itemize}
+                \pause \item \textpf{char}, \textpf{short}, \textpf{int}, or \textpf{long}?
+                \pause \item \textpf{signed} or \textpf{unsigned}?
+            \end{itemize}
+        \pause \item When you're done, try implementing this function recursively.
+    \end{itemize}
+\end{frame}
+
+\end{document}
