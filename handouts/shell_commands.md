@@ -64,21 +64,13 @@ geometry: margin=1in
 ### `less`
     - Purpose: Like `cat`, but provides scrolling and search functionality.
 
-## Miscellaneous
+### Git
 
-### `man`
-    - Purpose: Displays manual pages.
-    - Example: `man ls`
-### `tldr`
-    - Purpose: Like `man`, but more concise.
-    - Example: `tldr ls`
-### `echo`
-    - Purpose: Prints its arguments.
-### `btop`
-    - Purpose: Displays system resource usage information with a pretty UI.
 ### `git clone`
     - Purpose: Copies a remote Git repostiory to the current working directory
     - Example: `git clone https://github.com/kenballus/cs50-sp-public`
+### `git pull`
+    - Purpose: Fetches and merges the latest changes to a Git repository from a remote Git server.
 
 ## Typesetting
 
@@ -124,3 +116,16 @@ geometry: margin=1in
             - Instructs `clang-format` to format the C files in-place instead of just printing the formatted code.
         - `--style='{IndentWidth: 4, AllowShortFunctionsOnASingleLine: false}'`
             - Instructs `clang-format` to use better styling rules, in my opinion.
+
+## Miscellaneous
+
+### `man`
+    - Purpose: Displays manual pages.
+    - Example: `man ls`
+### `tldr`
+    - Purpose: Like `man`, but more concise.
+    - Example: `tldr ls`
+### `echo`
+    - Purpose: Prints its arguments.
+### `btop`
+    - Purpose: Displays system resource usage information with a pretty UI.
