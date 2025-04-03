@@ -30,3 +30,8 @@ geometry: margin=1in
 ### Integer wraparound
     - When unsigned integers overflow/underflow, they wrap around. You can therefore think of $n$-bit unsigned integer math as though it's done modulo $2^n$.
     - Signed integer overflow/underflow is undefined behavior, so never allow your signed integers to get too big or small.
+
+### Integer literals
+    - Integer literals default to the type `int`.
+    - If you need more range than `int`, you need to append a type suffix on your literal.
+    - For example, `18446744073709551615` is too big to fit in an `int`, and will not work the way you expect, but `18446744073709551615ul` is fine, because the `ul` type suffix indicates to the compiler to store the number in an `unsigned long`.
