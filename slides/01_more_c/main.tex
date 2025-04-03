@@ -1,0 +1,53 @@
+\documentclass[hyphens,aspectratio=169,dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textcomp}
+\usepackage{moresize}
+\usepackage{framed}
+\usepackage{minted}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usetheme{Berlin}
+\usecolortheme[RGB={0,95,47}]{structure}
+\beamertemplatenavigationsymbolsempty
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\newcommand{\textpf}[1]{\texttt{\color{black}\fcolorbox{lightgray}{lightgray}{#1}}}
+
+\begin{document}
+
+\begin{frame}[fragile]{Multi-File C Programs}
+    \begin{itemize}
+        \pause \item Recall `my\_log2`, `my\_sub` and `my\_abs` from last class.
+        \pause \item Suppose that we want to use them in the following program:
+    \end{itemize}
+    \inputminted{c}{math_main.c}
+
+    \begin{center} Copy down this program and attempt to compile it. \end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Understanding the Errors}
+    \begin{verbatim}
+math_main.c: In function ‘main’:
+math_main.c:2:12: error: implicit declaration of function ‘my_sub’ [-Wimplicit-function-declaration]
+    2 |     return my_sub(my_log2(my_abs(18446744073709551615ul)));
+      |            ^~~~~~
+math_main.c:2:19: error: implicit declaration of function ‘my_log2’ [-Wimplicit-function-declaration]
+    2 |     return my_sub(my_log2(my_abs(18446744073709551615ul)));
+      |                   ^~~~~~~
+math_main.c:2:27: error: implicit declaration of function ‘my_abs’ [-Wimplicit-function-declaration]
+    2 |     return my_sub(my_log2(my_abs(18446744073709551615ul)));
+      |
+    \end{verbatim}
+\end{frame}
+\end{document}
