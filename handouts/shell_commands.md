@@ -6,83 +6,83 @@ geometry: margin=1in
 
 ## SSH
 
-- `ssh-keygen`
+### `ssh-keygen`
     - Purpose: Generates an SSH keypair, storing the result in the `~/.ssh` directory.
-- `ssh`
+### `ssh`
     - Purpose: Provides shell access to a remote system.
     - Example: `ssh bkallus@plink.cs.dartmouth.edu`
     - Flags:
         - `-i some_private_key`
             - Uses the specified private key (identity file) instead of the default private key.
-- `scp`
+### `scp`
     - Purpose: Copies files to and from remote systems.
     - Example `scp bkallus@plink.cs.dartmouth.edu:cs50-sp-public/handouts/shell_commands.md .`
         - Copies this file from `plink` to my local machine.
 
 ## Filesystem Interaction
 
-- `cd`
+### `cd`
     - Purpose: Changes your current working directory.
     - Example: `cd ./slides`
-- `ls`
+### `ls`
     - Purpose: Lists the files in the current working directory.
     - Flags:
         - `-a`
             - Shows hidden files.
         - `-l`
             - Shows extra information, such as last-modified date, file size, and file permissions.
-- `cp`
+### `cp`
     - Purpose: Copies files
     - Example: `cp example.txt copy_of_example.txt`
     - Flags:
         - `-r`
             - Needed when copying directories. By default, `cp` only copies plain files, not directories.
-- `mv`
+### `mv`
     - Purpose: Moves and/or renames files.
     - Example: `mv some_file.txt ../`
         - Moves a `some_file.txt` into the parent directory
     - Example: `mv some_file.txt some_file_with_a_new_name.txt`
         - Renames `some_file.txt` to `some_file_with_a_new_name.txt`
-- `pwd`
+### `pwd`
     - Purpose: Displays your current working directory.
-- `rm`
+### `rm`
     - Purpose: Deletes files
     - Example: `rm some_file.txt`
-- `rmdir`
+### `rmdir`
     - Purpose: Deletes empty directories
     - Example: `rmdir some_empty_directory`
 
 ## Reading and Writing Files
 
-- `nano some_file`
+### `nano some_file`
     - Purpose: Opens `some_file` for editing in the `nano` text editor.
-- `cat`
+### `cat`
     - Purpose: Displays files.
     - Example: `cat some_file.txt`
-- `batcat`
+### `batcat`
     - Purpose: Like `cat`, but with syntax highlighting.
-- `less`
+### `less`
     - Purpose: Like `cat`, but provides scrolling and search functionality.
 
 ## Miscellaneous
 
-- `man`
+### `man`
     - Purpose: Displays manual pages.
     - Example: `man ls`
-- `tldr`
+### `tldr`
     - Purpose: Like `man`, but more concise.
     - Example: `tldr ls`
-- `echo`
+### `echo`
     - Purpose: Prints its arguments.
-- `btop`
+### `btop`
     - Purpose: Displays system resource usage information with a pretty UI.
-- `git clone`
+### `git clone`
     - Purpose: Copies a remote Git repostiory to the current working directory
     - Example: `git clone https://github.com/kenballus/cs50-sp-public`
 
 ## Typesetting
 
-- `pandoc`:
+### `pandoc`:
     - Purpose: Compiles Markdown documents to various file formats.
     - Example: `pandoc -i shell_commands.md -o shell_commands.pdf`
     - Flags:
@@ -90,13 +90,13 @@ geometry: margin=1in
             - Specifies the input file
         - `-o some_output_file.pdf`
             - Specifies the output file
-- `pdflatex`:
+### `pdflatex`:
     - Purpose: Compiles LaTeX documents to PDF.
     - Example: `pdflatex todays_class_slides.tex`
 
 ## C Programming
 
-- `gcc`, `clang`
+### `gcc`, `clang`
     - Purpose: Compiles C programs.
     - Example: `gcc test.c`
     - Flags:
@@ -116,7 +116,7 @@ geometry: margin=1in
             - Instructs the compiler driver to skip linking.
         - `-S`
             - Instructs the compiler to skip assembling and linking.
-- `clang-format`
+### `clang-format`
     - Purpose: Automatically formats your C source code.
     - Example: `clang-format -i test.c`
     - Flags:
