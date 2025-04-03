@@ -25,7 +25,7 @@
 
 \begin{document}
 
-\begin{frame}[fragile]{Multi-File C Programs}
+\begin{frame}[fragile]{Missing Functions}
     \begin{center} Copy down this program into a file named \textpf{main.c} and attempt to compile it. \end{center}
 
     \inputminted{c}{main.c}
@@ -53,6 +53,13 @@ main.c:2:27: error: implicit declaration of function ‘my_abs’ [-Wimplicit-fu
     \begin{itemize}
         \pause \item We could put the definitions of \textpf{my\_sub}, \textpf{my\_log2}, and \textpf{my\_abs} into \textpf{main.c}.
         \pause \item This doesn't scale well :(
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Multi-File Programs}
+    \begin{center} Place the definitions of \textpf{my\_sub}, \textpf{my\_log2}, and \textpf{my\_abs} into \textpf{my\_math.c}. Do not define a \textpf{main} in this file. \end{center}
+    \begin{itemize}
+        \pause \item 
     \end{itemize}
 \end{frame}
 
