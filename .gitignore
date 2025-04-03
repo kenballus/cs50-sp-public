@@ -6,4 +6,4 @@
 *.aux
 *.out
 *.nav
-**/_minted
+**/_minted*
