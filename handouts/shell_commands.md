@@ -108,6 +108,8 @@ geometry: margin=1in
             - Instructs the compiler driver to skip linking.
         - `-S`
             - Instructs the compiler to skip assembling and linking.
+        - `-E`
+            - Instructs the compiler to skip compilation, assembly, and linking. (i.e., to only preprocess)
 ### `clang-format`
     - Purpose: Automatically formats your C source code.
     - Example: `clang-format -i test.c`
