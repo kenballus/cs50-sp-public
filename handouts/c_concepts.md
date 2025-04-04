@@ -35,3 +35,7 @@ geometry: margin=1in
     - Integer literals default to the type `int`.
     - If you need more range than `int`, you need to append a type suffix on your literal.
     - For example, `18446744073709551615` is too big to fit in an `int`, and will not work the way you expect, but `18446744073709551615ul` is fine, because the `ul` type suffix indicates to the compiler to store the number in an `unsigned long`.
+
+## `static` functions
+    - `static` functions are visible only within the compilation in which they are defined.
+    - Similar to Java's `private`.
