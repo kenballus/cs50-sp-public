@@ -18,6 +18,7 @@ geometry: margin=1in
     - Purpose: Copies files to and from remote systems.
     - Example `scp bkallus@plink.cs.dartmouth.edu:cs50-sp-public/handouts/shell_commands.md .`
         - Copies this file from `plink` to my local machine.
+        - Note that this must be run from your laptop, not `plink`.
 
 ## Filesystem Interaction
 
@@ -56,13 +57,12 @@ geometry: margin=1in
 
 ### `nano some_file`
     - Purpose: Opens `some_file` for editing in the `nano` text editor.
-### `cat`
-    - Purpose: Displays files.
-    - Example: `cat some_file.txt`
-### `batcat`
-    - Purpose: Like `cat`, but with syntax highlighting.
-### `less`
-    - Purpose: Like `cat`, but provides scrolling and search functionality.
+### `cat some_file`
+    - Purpose: Displays the content of `some_file`.
+### `batcat some_file`
+    - Purpose: Displays the content of `some_file` with syntax highlighting.
+### `less some_file`
+    - Purpose: Displays the content of `some_file` in a scrolling terminal interface.
 
 ### Git
 
