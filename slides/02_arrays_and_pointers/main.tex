@@ -1,0 +1,101 @@
+\documentclass[hyphens,aspectratio=169,dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textcomp}
+\usepackage{moresize}
+\usepackage{framed}
+\usepackage{minted}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usetheme{Berlin}
+\usecolortheme[RGB={0,95,47}]{structure}
+\beamertemplatenavigationsymbolsempty
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\newcommand{\textpf}[1]{\texttt{\color{black}\fcolorbox{lightgray}{lightgray}{#1}}}
+
+\begin{document}
+
+\begin{frame}[fragile]{Declaring an Array}
+    \pause To declare an array named \textpf{ary} of 5 \textpf{unsigned int}s,
+    \begin{minted}{c}
+unsigned int ary[5];
+    \end{minted}
+    \pause \begin{center} \textbf{What are the values in the array?} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Initializing an Array}
+    \begin{itemize}
+        \item \pause To declare and initialize an array named \textpf{ary} of 5 \textpf{unsigned int}s,
+    \begin{minted}{c}
+unsigned int ary[5] = {1, 2, 3, 4, 5};
+    \end{minted}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Default-Initializing an Array}
+    \begin{center} What are the values in the array? \end{center}
+    \begin{minted}{c}
+unsigned int ary[5] = {1};
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Default-Initializing an Array}
+    \begin{center} What is the length of the array? \end{center}
+    \begin{minted}{c}
+unsigned int ary[] = {1, 2, 3, 4, 5};
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Dereference}
+    \begin{itemize}
+        \item \pause To access this first element in an array, use the unary \textpf{*} operator.
+    \begin{minted}{c}
+int main(void) {
+    unsigned int ary[5] = {1, 2, 3, 4, 5};
+    return *ary;
+}
+    \end{minted}
+    \begin{center} What does this return? \end{center}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Arraythmetic}
+    \begin{itemize}
+        \item \pause To access the tail of an array, use \textpf{+}
+    \begin{minted}{c}
+int main(void) {
+    unsigned int ary[5] = {1, 2, 3, 4, 5};
+    return *(ary + 1);
+}
+    \end{minted}
+    \begin{center} What does this return? \end{center}
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Taking the length of an Array}
+    \begin{itemize}
+        \pause \item Recall that the \textpf{sizeof} operator returns the number of bytes used to represent its argument.
+        \pause \item Knowing this, how would you generically take the length of a nonempty array?
+        \pause \item \textbf{Given an array \textpf{ary}, its length is}
+        \begin{minted}{c}
+(sizeof ary) / (sizeof ary[0])
+        \end{minted}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\end{frame}
+
+\end{document}

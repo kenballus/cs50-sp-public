@@ -9,7 +9,7 @@ LaTeX is a typesetting language that can be compiled to PDF.
 In order to compile the LaTeX source code, simply run `make` in the directory containing the `.tex` file.
 For example, to compile the slides from the first class,
 ```bash
-cd ./slides/00_c
+cd ./slides/00_compiling_and_integers
 pdflatex -shell-escape main.tex
 ```
 That should produce a file named `main.pdf` that you can `scp` to your laptop and view.
