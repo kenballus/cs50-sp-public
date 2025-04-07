@@ -25,66 +25,129 @@
 
 \begin{document}
 
-\begin{frame}[fragile]{Declaring an Array}
-    \pause To declare an array named \textpf{ary} of 5 \textpf{unsigned int}s,
-    \begin{minted}{c}
-unsigned int ary[5];
-    \end{minted}
-    \pause \begin{center} \textbf{What are the values in the array?} \end{center}
+\begin{frame}[fragile]{Disclaimer}
+    \begin{itemize}
+        \pause \item This is a large, important lecture.
+        \pause \item Please interrupt me as soon as something doesn't make sense.
+        \pause \item I would legitimately rather not finish all of the material than have any of you not understand what's going on.
+        \pause \item This lecture will require your complete attention :)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Array Operations}
+    In C, there are 2 fundamental array operations:
+    \begin{enumerate}
+        \pause \item Unary \textpf{*}, a.k.a. dereference
+            \begin{itemize}
+                \pause \item Accesses the first item in the array.
+            \end{itemize}
+        \pause \item Binary \textpf{+} with integer operand
+            \begin{itemize}
+                \pause \item Takes the tail of the array.
+                \pause \item For example, adding 1 to an array in C is similar to slicing a list in Python with \textpf{[1:]}.
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Declaring a Local Array}
+    \begin{itemize}
+        \pause \item The following program declares a local array of 5 \textpf{unsigned int}s named \textpf{ary}, and returns its first element.
+            \inputminted{c}{uninitialized_local_array.c}
+        \pause \item Q: What does this program return?
+        \pause \item A: \textbf{Indeterminate.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Declaring a Global Array}
+    \begin{itemize}
+        \pause \item The following program declares a global array of 5 \textpf{unsigned int}s named \textpf{ary}, and returns its first element.
+            \inputminted{c}{uninitialized_global_array.c}
+        \pause \item Q: What does this program return?
+        \pause \item A: \textbf{0. All global variables are default-initialized to 0.}
+        \pause \item This is unintuitive! You'll understand the reason for this later in the course.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{VLAs}
+    \begin{itemize}
+        \pause \item The length of an array must be a compile-time constant expression.
+        \pause \item On some compilers, this isn't enforced, so the following would work:
+            \inputminted{c}{vla.c}
+        \pause \item Arrays where the size is not a compile-time constant are known as ``variable-length arrays" (VLAs).
+        \pause \item They are error-prone and difficult to reason about, and were removed from the C standard in 2011. Do not use them!
+        \pause \item From now on, always compile with \textpf{-Wvla} so the compiler will warn you when you accidentally use a VLA.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Initializing an Array}
     \begin{itemize}
-        \item \pause To declare and initialize an array named \textpf{ary} of 5 \textpf{unsigned int}s,
-    \begin{minted}{c}
-unsigned int ary[5] = {1, 2, 3, 4, 5};
-    \end{minted}
+        \item \pause Just like \textpf{struct}s, arrays can be initialized with intializer lists:
+        \inputminted{c}{initialized_local_array.c}
     \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Default-Initializing an Array}
-    \begin{center} What are the values in the array? \end{center}
-    \begin{minted}{c}
-unsigned int ary[5] = {1};
-    \end{minted}
+    \begin{itemize}
+        \pause \item Initializer lists are permitted to have fewer elements than the length of the array.
+            \inputminted{c}{default_initialized_local_array.c}
+        \pause \item Q: What is the second element in the array?
+        \pause \item A: \textbf{When an array (global or local) is assigned to an initializer list with less elements than the array's length, the remaining elements are default-initialized to 0.}
+        \pause \item This is really unintuitive!
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Default-Initializing an Array}
-    \begin{center} What is the length of the array? \end{center}
-    \begin{minted}{c}
-unsigned int ary[] = {1, 2, 3, 4, 5};
-    \end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{Dereference}
     \begin{itemize}
-        \item \pause To access this first element in an array, use the unary \textpf{*} operator.
-    \begin{minted}{c}
-int main(void) {
-    unsigned int ary[5] = {1, 2, 3, 4, 5};
-    return *ary;
-}
-    \end{minted}
-    \begin{center} What does this return? \end{center}
+        \pause \item Q: What is the length of the array in this program?
+            \inputminted{c}{implicit_length_local_array.c}
+        \pause \item A: \textbf{1, thankfully :)}
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Arraythmetic}
+\begin{frame}[fragile]{Array Indexing}
     \begin{itemize}
-        \item \pause To access the tail of an array, use \textpf{+}
-    \begin{minted}{c}
-int main(void) {
-    unsigned int ary[5] = {1, 2, 3, 4, 5};
-    return *(ary + 1);
-}
-    \end{minted}
-    \begin{center} What does this return? \end{center}
+        \item \pause To index an array for element \textpf{n},
+            \begin{itemize}
+                \pause \item Add \textpf{n} to the array.
+                \pause \item Dereference the result.
+            \end{itemize}
+        \pause \item Q: What does this return?
+            \inputminted{c}{manual_array_index.c}
     \end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Array Indexing}
+    \begin{itemize}
+        \pause \item Q: What does this return?
+            \inputminted{c}{manual_array_index_2.c}
+    \end{itemize}
+\end{frame}
 
+\begin{frame}[fragile]{The \textpf{[]} Operator}
+    \begin{itemize}
+        \pause \item The \textpf{[]} operator combines the \textpf{*} and \textpf{+} operators.
+        \pause \item That is, the following is equivalent to the programs on the previous two slides:
+            \inputminted{c}{regular_array_index.c}
+        \pause \item Q: Copy this program down and build it. How does it behave when you index the array for
+        \begin{itemize}
+            \pause \item -1?
+            \pause \item 10?
+            \pause \item -10?
+            \pause \item 999999999?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
-\begin{frame}[fragile]{Taking the length of an Array}
+\begin{frame}[fragile]{Some Fun Trivia}
+    \begin{itemize}
+        \pause \item Suppose that \textpf{a} is an array and \textpf{i} is an integer.
+        \pause \item Then, \textpf{a[i]} and \textpf{*(a + i)} are \textbf{exactly equivalent}.
+        \pause \item Knowing this, what does the following program do?
+            \inputminted{c}{weird_array_index.c}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Arrays and \textpf{sizeof}}
     \begin{itemize}
         \pause \item Recall that the \textpf{sizeof} operator returns the number of bytes used to represent its argument.
         \pause \item Knowing this, how would you generically take the length of a nonempty array?
@@ -92,10 +155,106 @@ int main(void) {
         \begin{minted}{c}
 (sizeof ary) / (sizeof ary[0])
         \end{minted}
+    \pause \item Q: Try writing a function that takes as input an array of \textpf{unsigned int} and returns its length. Does it behave the way you expect?
     \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Activity: Arrays and \textpf{sizeof}}
+    \begin{itemize}
+        \pause \item Define a \textpf{struct} with 4 fields:
+            \begin{itemize}
+                \item 1 \textpf{int},
+                \item 2 \textpf{char}s,
+                \item 1 \textpf{long}.
+            \end{itemize}
+        \pause \item Make an array containing 3 of your \textpf{struct}s.
+        \pause \item What do you expect the \textpf{sizeof} your array is?
+        \pause \item Take its size using \textpf{sizeof}. Is it what you expect?
+        \pause \item Now, take the \textpf{sizeof} your array \textpf{+ 1}. Is it what you expect?
+        \pause \item Try reordering the fields in your \textpf{struct}. How does it affect the \textpf{sizeof} computations? Try to make sense of this :)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Intro to Pointers}
+    \begin{itemize}
+        \pause \item Recall the following program:
+            \inputminted{c}{uninitialized_local_array.c}
+        \pause \item Q: The type of \textpf{ary} is \textpf{unsigned int[5]}. What is the type of \textpf{ary + 1}?
+        \pause \item A: \textbf{unsigned int *}
+        \pause \item (Pronounced ``\textpf{unsigned int} star" or ``\textpf{unsigned int} pointer")
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pointers}
+    \begin{itemize}
+        \pause \item The compiler is only smart enough to reason about arrays when their declaration is in scope.
+        \pause \item When you add to (take the tail of) an array, or pass an array into a function, it \textbf{decays} into a ``pointer."
+        \pause \item For the most part, a pointer is usable in exactly the same way as an array, except
+            \begin{enumerate}
+                \pause \item The \textpf{sizeof} a pointer is always constant. On \textpf{plink}, it's 8.
+                \pause \item Pointers can be reassigned.
+            \end{enumerate}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What is a Pointer?}
+    \begin{itemize}
+        \pause \item You can think of a process's memory as a really big array of bytes.
+        \pause \item A memory address, then, is just an index into that array.
+        \pause \item \textbf{A pointer is just a memory address.}
+        \pause \item On \textpf{plink}, pointers are 8 bytes. You can therefore cast them back and forth from \textpf{long} and they will still work.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Pointer Operations}
+    \begin{itemize}
+        \pause \item \textpf{*}, \textpf{+}, and \textpf{[]} work exactly the same for pointers as they do for arrays.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The \textpf{\&} (Address-of) Operator}
+    \begin{itemize}
+        \pause \item The unary \textpf{\&} operator takes the address of its operand.
+        \pause \item For example, if you have an \textpf{int} \textpf{i}, you can obtain its address with \textpf{\&i}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What's the \textit{point}?}
+    \begin{itemize}
+        \pause \item What does this program return?
+            \inputminted{c}{broken_add.c}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What's the \textit{point}?}
+    \begin{itemize}
+        \pause \item What if we want \textpf{add\_one} to modify \textpf{i} in \textpf{main}?
+        \pause \item Then, we need to make 3 changes.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{The Original Program}
+    \inputminted{c}{broken_add.c}
+\end{frame}
+
+\begin{frame}[fragile]{Change \#1: Make \textpf{add\_one} take an \textpf{int *}.}
+    \inputminted{c}{broken_add_p1.c}
+\end{frame}
+
+\begin{frame}[fragile]{Change \#2: Pass in \textpf{\&i} instead of \textpf{i}.}
+    \inputminted{c}{broken_add_p2.c}
+\end{frame}
+
+\begin{frame}[fragile]{Change \#3: Dereference \textpf{p} before accessing it}
+    \inputminted{c}{broken_add_p3.c}
+\end{frame}
+
+\begin{frame}[fragile]{Why does this work?}
+    \inputminted{c}{broken_add_p3.c}
+    \begin{itemize}
+        \pause \item When \textpf{main} calls \textpf{add\_one}, it passes in the address of its local variable \textpf{i}.
+        \pause \item When \textpf{add\_one} dereferences \textpf{p}, it accesses the same memory that stores \textpf{i}.
+    \end{itemize}
 \end{frame}
 
 \end{document}
