@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 2: `libcs50`
+# Assignment 2: `libcs50`, due Tuesday, April 15 at 11:59:59 PM
 
 Your task in this assignment is to build a library, `libcs50.a`, that implements a few useful functions from libc.
 
