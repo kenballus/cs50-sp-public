@@ -25,6 +25,13 @@
 
 \begin{document}
 
+\begin{frame}{Questions}
+    \begin{itemize}
+        \pause \item I've attempted to make today's lecture a little lighter so that I can better address some things covered in the last class.
+        \pause \item As always, feel free to interrupt with questions, even if they're about past classes' material.
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{CPU Privelege Levels}
     \begin{itemize}
         \pause \item x86\_64 CPUs have two primary privilege levels: ring 0 (kernel) and ring 3 (user).
@@ -77,7 +84,8 @@
     \begin{itemize}
         \pause \item The \texttt{read} syscall (x86\_64 syscall number 0) reads from a file descriptor.
         \pause \item The \texttt{write} syscall (x86\_64 syscall number 1) writes to a file descriptor.
-        \pause \item The \texttt{execve} syscall (x86\_64 syscall number 59) executes a new program, overwriting the currently running process.
+        \pause \item The \texttt{open} syscall (x86\_64 syscall number 2) acquires a file descriptor for a provided file path.
+        \pause \item The \texttt{close} syscall (x86\_64 syscall number 3) closes an existing file descriptor.
         \pause \item The \texttt{exit} syscall (x86\_64 syscall number 60) exits the process.
     \end{itemize}
 \end{frame}
@@ -89,6 +97,59 @@
         \pause \item The rest of the arguments depend on which system call you're invoking.
         \pause \item Consult this giant table for more details:
         \pause \item \url{https://www.chromium.org/chromium-os/developer-library/reference/linux-constants/syscalls/}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Nonportable \textpf{exit}}
+    \inputminted{c}{./exit_55.c}
+\end{frame}
+
+\begin{frame}{Portability}
+    \begin{itemize}
+        \pause \item On other OSes, and even on some other Linux machines, the \textpf{exit} syscall will have a different syscall number.
+        \pause \item For this reason, it's best to use the \textpf{SYS\_*} constants defined in \textpf{<sys/syscall.h>} when possible.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Portable \textpf{exit}}
+    \inputminted{c}{./exit_55_portable.c}
+\end{frame}
+
+\begin{frame}{File Descriptors}
+    \begin{itemize}
+        \pause \item On Unix, there are 3 file descriptors that are open when a process starts:
+            \begin{itemize}
+                \pause \item \textpf{stdin}, file descriptor 0
+                \pause \item \textpf{stdout}, file descriptor 1
+                \pause \item \textpf{stderr} file descriptor 2
+            \end{itemize}
+        \pause \item In order to perform operations on a file, you first need to acquire a file descriptor using the \textpf{open} system call.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Activity: DIY \textpf{cat}}
+    \begin{itemize}
+        \pause \item Write a C program that makes a \textpf{write} system call to write something cool to \textpf{stdout}.
+        \pause \item Modify your program to read $\leq 100$ bytes from \textpf{stdin}, and \textpf{write} the received data to \textpf{stdout}.
+        \pause \item Modify your program to repeatedly \textpf{read} and \textpf{write} in a loop until either system call fails.
+        \pause \item Make a new file called \textpf{prog\_input}. Modify your program to read from that file instead of \textpf{stdin}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Strings}
+    \begin{itemize}
+        \pause \item Strings are just \textpf{char *}s.
+        \pause \item Because \textpf{sizeof} doesn't work on pointers, you need some other way of knowing when a string ends.
+        \pause \item One way to do this is to store strings along with their lengths.
+        \pause \item Another way to do this is to designate some byte (or byte sequence) as meaning ``end of string."
+        \pause \item In C, it's traditional to use the 0 byte for this purpose.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Activity: Character Count}
+    \begin{itemize}
+        \pause \item Write a function \textpf{unsigned long char\_count(char *s, char c)} that counts the number of occurrences of the \textpf{char} \textpf{c} in the string \textpf{s}.
+        \pause \item Verify that your function works on reasonable arguments, then try passing weird arguments to your function. What does it do?
     \end{itemize}
 \end{frame}
 
