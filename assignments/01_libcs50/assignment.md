@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 2: `libcs50`, due Tuesday, April 15 at 11:59:59 PM
+# Assignment 01: `libcs50`, due Tuesday, April 15 at 11:59:59 PM
 
 Your task in this assignment is to build a library, `libcs50.a`, that implements a few useful functions from libc.
 
@@ -24,7 +24,7 @@ Your library should globally define **only** the following functions (all other 
     - See `man 3 strncpy` for the expected behavior of this function.
 - `long cs50_strtol(char const *nptr, char const **endptr, int base)`
     - See `man 3 strtol` for the expected behavior of this function.
-    - You do't need to correctly handle integer overflow/underflow.
+    - You don't need to correctly handle integer overflow/underflow.
 - `int cs50_close(int fd)`
     - See `man 2 close` for the expected behavior of this function.
 - `void cs50_exit(int status)`
@@ -90,14 +90,14 @@ You may find these system header files useful:
 
 We will test your library by first building each `.c` file into an object (`.o`) file as follows:
 ```sh
-for c_file in {getchar,puts,strcat,strcmp,strcpy,strlen,strncpy,strtol}.c; do
+for c_file in {close,exit,getchar,open,puts,read,strcat,strcmp,strcpy,strlen,strncpy,strtol,write}.c; do
     gcc -fsanitize=address,undefined -ggdb -O0 -Wall -Wextra -Wpedantic -Wvla -c "$c_file"
 done
 ```
 
 We will then combine those object files into a static library, `libcs50.a` as follows:
 ```sh
-ar -rs libcs50.a {getchar,puts,strcat,strcmp,strcpy,strlen,strncpy,strtol}.o
+ar -rs libcs50.a {close,exit,getchar,open,puts,read,strcat,strcmp,strcpy,strlen,strncpy,strtol,write}.o
 ```
 
 After that, we'll link the static library with a testing harness (`test.c`) to produce an executable.
