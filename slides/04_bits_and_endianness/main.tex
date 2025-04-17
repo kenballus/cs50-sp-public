@@ -1,0 +1,280 @@
+\documentclass[hyphens,aspectratio=169,dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textcomp}
+\usepackage{moresize}
+\usepackage{framed}
+\usepackage{minted}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usetheme{Berlin}
+\usecolortheme[RGB={0,95,47}]{structure}
+\beamertemplatenavigationsymbolsempty
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\newcommand{\textpf}[1]{\texttt{\color{black}\fcolorbox{lightgray}{lightgray}{#1}}}
+
+\begin{document}
+
+\section{Binary and Hex}
+
+\begin{frame}{Binary and Hexadecimal}
+    \begin{itemize}
+        \pause \item Why do we use binary?
+        \pause \item Why do we use hex?
+    \end{itemize}
+    % Whiteboard as necessary here.
+\end{frame}
+
+\section{2's Complement}
+
+\begin{frame}{Negative Binary Numbers}
+    How should we represent negative numbers in binary?
+\end{frame}
+
+\begin{frame}{Take 1: Sign Bit}
+    \begin{itemize}
+        \pause \item Reserve the most significant bit as the sign bit.
+        \pause \item To negate a number, flip its sign bit.
+    \end{itemize}
+
+    \begin{align*}
+        \texttt{bin}(-25) &= \texttt{set\_msb}(\texttt{bin}(25)) \\
+                          &= \texttt{set\_msb}(\texttt{0b}00011001) \\
+                          &= \texttt{0b}10011001
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Sign Bit Pros and Cons}
+    Pros
+    \begin{itemize}
+        \pause \item It's easy for people to understand.
+    \end{itemize}
+
+    \pause
+
+    Cons
+    \begin{itemize}
+        \pause \item +0 and -0 are distinct.
+        \pause \item Calculations are not consistent with unsigned numbers.
+    \end{itemize}
+
+    \pause
+    \begin{center}Whiteboard!\end{center}
+\end{frame}
+
+\begin{frame}{Take 2: 2's Complement}
+    \begin{itemize}
+        \pause \item To negate a number, flip all of its bits, then add 1.
+        \pause \item This is how nearly all modern computers represent negative numbers.
+    \end{itemize}
+
+    \pause \begin{align*}
+        \texttt{bin}(-25) &= \texttt{flip\_bits}(\texttt{bin}(25)) + \texttt{0b}1 \\
+                          &= \texttt{flip\_bits}(\texttt{0b}00011001) + \texttt{0b}1 \\
+                          &= \texttt{0b}11100110 + \texttt{0b}1 \\
+                          &= \texttt{0b}11100111
+    \end{align*}
+\end{frame}
+
+\begin{frame}{2's Complement Pros and Cons}
+    Pros
+    \begin{itemize}
+        \pause \item There's only one zero.
+        \pause \item Calculations are consistent with unsigned numbers!
+    \end{itemize}
+
+    \pause
+    \begin{center}Whiteboard!\end{center} % -18 -38
+    \pause
+
+    Cons
+    \begin{itemize}
+        \pause \item It's more difficult to understand.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Example Program}
+    What does this program do?
+    \begin{center}
+        \begin{minted}{c}
+#include <stdint.h>
+#include <stdio.h>
+
+int main(void) {
+    int8_t i8 = -1;
+    int16_t i16 = i8;
+    printf("%hd\n", i16); // "%hd" means base-10 signed short
+}
+        \end{minted}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Sign Extension}
+    \begin{itemize}
+        \pause \item When converting a negative integer from a smaller bitwidth to a larger bitwidth, you need to fill the new bits with \texttt{1}s in order to preserve the original integer's value.
+    \end{itemize}
+
+    \pause For example,
+    \begin{align*}
+        \texttt{(int16\_t)(int8\_t)(-1)} &= \texttt{(int16\_t)0b11111111} \\
+                                         &= \texttt{0b}\underbrace{\texttt{11111111}}_\text{(8 new \texttt{1}s)}\texttt{11111111} \\
+                                         &= \texttt{(int16\_t)(-1)}
+    \end{align*}
+\end{frame}
+
+\begin{frame}{Sign Extension}
+    \begin{itemize}
+        \pause \item When converting a nonnegative integer from a smaller bitwidth to a larger bitwidth, you need to fill the new bits with \texttt{0}s in order to preserve the original integer's value.
+    \end{itemize}
+
+    \pause For example,
+    \begin{align*}
+        \texttt{(int16\_t)(int8\_t)(127)} &= \texttt{(int16\_t)0b01111111} \\
+                                          &= \texttt{0b}\underbrace{\texttt{00000000}}_\text{(8 new \texttt{0}s)}\texttt{01111111} \\
+                                          &= \texttt{(int16\_t)(127)}
+    \end{align*}
+\end{frame}
+
+\section{Endianness}
+
+\begin{frame}[fragile]{Example 1}
+    Q: What does this print?
+    \begin{minted}{c}
+#include <stdint.h>
+#include <stdio.h>
+
+int main(void) {
+    uint8_t i[] = {0xFF, 0x00};
+    uint16_t *p = i;
+    printf("%x\n", *p);
+}
+    \end{minted}
+
+    \pause A: Either \texttt{0xFF00} or \texttt{0x00FF}, depending on the endianness of your CPU.
+\end{frame}
+
+\begin{frame}{Endianness}
+    CPUs can be \textbf{little-endian} or \textbf{big-endian} (LSB or MSB, le/el or be). \\
+
+    When a little-endian CPU executes a \textbf{multi-byte} read, it reverses the order of the bytes before processing them. \\
+
+    When a little-endian CPU executes a \textbf{multi-byte} write, it writes the bytes from least-significant to most-significant.
+\end{frame}
+
+\begin{frame}{Examples of Little-Endian Reads}
+    Suppose that a computer's memory had the following contents at address \texttt{p}:
+    \begin{center}
+        \begin{tabular}{c|c|c|c|c|c}
+            \hline
+            ... & \texttt{0xDE} & \texttt{0xAD} & 0\texttt{xBE} & \texttt{0xEF} & ... \\
+            \hline
+        \end{tabular}
+
+            $\overset{\uparrow}{\texttt{p}}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~$ \\ % This is a hack :)
+
+    \end{center}
+
+    When I read 2 bytes from \texttt{p} on a big-endian machine, I get... \pause \texttt{0xDEAD}.
+
+    When I read 2 bytes from \texttt{p} on a little-endian machine, I get... \pause \texttt{0xADDE}.
+
+    When I read 4 bytes from \texttt{p} on a big-endian machine, I get... \pause \texttt{0xDEADBEEF}.
+
+    When I read 4 bytes from \texttt{p} on a little-endian machine, I get... \pause \texttt{0xEFBEADDE}.
+\end{frame}
+
+\begin{frame}{Endianness Misconception 1}
+    Endianness is about bytes, \textbf{not bits}.
+
+    A little-endian system reverses the order of bytes during memory accesses.
+
+    \begin{center}\textbf{It does not change the order of the bits within each byte.}\end{center}
+
+    % As a consequence, if you always read and write things 1 byte at a time, you will not observe any differences between big- and little-endian systems.
+\end{frame}
+
+\begin{frame}[fragile]{Endianness Misconception 2}
+    Endianness does not affect the direction of memory accesses.
+
+    That is, if we execute a 4 byte read at the address \texttt{0x4000}, then we're reading from addresses \texttt{0x4000}, \texttt{0x4001}, \texttt{0x4002}, and \texttt{0x4003}, regardless of the endianness of the system.
+\end{frame}
+
+\begin{frame}[fragile]{Example 2}
+    What does this print on a little-endian computer? On a big-endian computer?
+    \begin{minted}{c}
+#include <stdint.h>
+#include <stdio.h>
+
+int main(void) {
+    uint32_t data = 0xDEADBEEF;
+    uint8_t *p = (uint8_t *)&data;
+    printf("%hhx %hhx %hhx %hhx\n", p[0], p[1], p[2], p[3]);
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{???}
+    \begin{center}Why do we do this to ourselves?\end{center}
+
+    \pause
+    \begin{center}\textbf{Optimization.}\end{center}
+
+    \begin{minted}{c}
+#include <stdint.h>
+
+uint8_t f(uint64_t *p64) {
+    return *p64;
+}
+    \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{The Why}
+    \begin{center}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                Big-endian
+                \begin{minted}{asm}
+f:
+        addiu   $sp, $sp, -8
+        sw      $ra, 4($sp)
+        sw      $fp, 0($sp)
+        move    $fp, $sp
+        lbu     $2, 7($4)
+        move    $sp, $fp
+        lw      $fp, 0($sp)
+        lw      $ra, 4($sp)
+        jr      $ra
+        addiu   $sp, $sp, 8
+                \end{minted}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                Little-endian
+                \begin{minted}{asm}
+f:
+        addiu   $sp, $sp, -8
+        sw      $ra, 4($sp)
+        sw      $fp, 0($sp)
+        move    $fp, $sp
+        lbu     $2, 0($4)
+        move    $sp, $fp
+        lw      $fp, 0($sp)
+        lw      $ra, 4($sp)
+        jr      $ra
+        addiu   $sp, $sp, 8
+                \end{minted}
+            \end{column}
+        \end{columns}
+    \end{center}
+\end{frame}
+
+\end{document}
