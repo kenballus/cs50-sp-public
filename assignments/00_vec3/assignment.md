@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 0: `vec3`, Due Tuesday, April 8 at 11:59:59 PM
+# Assignment 00: `vec3`, Due Tuesday, April 8 at 11:59:59 PM
 
 Your task in this assignment is to build a simple 3D vector library based on the following struct:
 ```C
