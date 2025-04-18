@@ -4,7 +4,7 @@ geometry: margin=1in
 
 # Assignment 02: `utf8`, due Tuesday, April 22 at 11:59:59 PM
 
-Your task in this assignment is to build a UTF-8 decoder.
+Your task in this assignment is to build a simple UTF-8 code point decoder.
 
 During this task, you are permitted to use anything you want from libc, though I don't anticipate that you'll need to use very much of libc for this assignment.
 No other libraries are permitted.
@@ -13,11 +13,14 @@ Your parser should be exposed through a single function:
 ```C
 uint64_t parse_utf8(uint8_t *input, uint64_t input_len, uint32_t *output);
 ```
+
 Its arguments are as follows:
 
-- `input`: a pointer to the bytes to parse
-- `input_len`: the length of `input`
-- `output`: the location where the decoded code points should be written. You may assume that this buffer is big enough to store the result.
+- `input`: A pointer to some bytes. These bytes are to be decoded into a sequence of UTF-8 code points.
+- `input_len`: The length of `input`
+- `output`: The location where the decoded code points should be written. You may assume that this buffer is big enough to store the result.
+
+Your function should return the length of the code point sequence written into `output`.
 
 You may find the table in the "Description" section of [this Wikipedia page](https://en.wikipedia.org/wiki/UTF-8#Description) helpful.
 
@@ -25,7 +28,6 @@ Your decoder should `exit(EXIT_FAILURE)` whenever the input bytes cannot be deco
 
 You do not need to handle any errors related to the validity of the code point sequence.
 That is, you have done your job if you exit with a successful status if and only if `input` is a (potentially empty) string of byte sequences that all match one of the four patterns in the Wikipedia table referenced above.
-
 
 ## What to Submit
 
