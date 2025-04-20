@@ -17,7 +17,7 @@ uint64_t parse_utf8(uint8_t *input, uint64_t input_len, uint32_t *output);
 Its arguments are as follows:
 
 - `input`: A pointer to some bytes. These bytes are to be decoded into a sequence of UTF-8 code points.
-- `input_len`: The length of `input`
+- `input_len`: The length (in bytes) of `input`.
 - `output`: The location where the decoded code points should be written. You may assume that this buffer is big enough to store the result.
 
 Your function should return the length of the code point sequence written into `output`.
