@@ -22,7 +22,7 @@ Your library should globally define **only** the following functions (all other 
     - See `man 3 strlen` for the expected behavior of this function.
 - `char *cs50_strncpy(char *dst, char const *src, size_t dsize)`
     - See `man 3 strncpy` for the expected behavior of this function.
-- `long cs50_strtol(char const *nptr, char const **endptr, int base)`
+- `long cs50_strtol(char const *nptr, char **endptr, int base)`
     - See `man 3 strtol` for the expected behavior of this function.
     - You don't need to correctly handle integer overflow/underflow.
 - `int cs50_close(int fd)`
