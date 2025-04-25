@@ -1,0 +1,83 @@
+\documentclass[hyphens,aspectratio=169,dvipsnames]{beamer}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{textcomp}
+\usepackage{moresize}
+\usepackage{framed}
+\usepackage{minted}
+\usepackage{relsize}
+\usepackage{tikz}
+\usepackage{comment}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+\usetheme{Berlin}
+\usecolortheme[RGB={0,95,47}]{structure}
+\beamertemplatenavigationsymbolsempty
+
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\newcommand{\textpf}[1]{\texttt{\color{black}\fcolorbox{lightgray}{lightgray}{#1}}}
+
+\begin{document}
+
+\begin{frame}[fragile]{Making System Calls in Assembly}
+    On x86\_64, a system call is made like this:
+    \begin{enumerate}
+        \pause \item Place the system call number in \textpf{rax}.
+        \pause \item Place the arguments in \textpf{rdi}, \textpf{rsi}, \textpf{rdx}, \textpf{r10}, \textpf{r8}, \textpf{r9}, in order.
+        \pause \item Execute a \textpf{syscall} instruction.
+        \pause \item (The OS executes the syscall)
+        \pause \item The syscall returns, with the result left in \textpf{rax}. This also overwrites the values in \textpf{rcx} and \textpf{r11}.
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Activity: Your First Assembly System Call}
+    Write an assembly program to exit with status 25, without returning from \textpf{main}.
+\end{frame}
+
+\begin{frame}[fragile]{Bypassing \textpf{main}: \textpf{\_start}}
+    \begin{itemize}
+        \pause \item You might notice that some ``valid" \textpf{main} functions cause the program to behave weirdly.
+        \pause \item Example!
+        \pause \item We can solve this problem by using \textpf{\_start} instead of \textpf{main}.
+        \pause \item \textpf{\_start} is the true entry point of the program. To write your own \textpf{\_start}, you need to tell the compiler driver not to provide its own:
+    \end{itemize}
+    \pause \begin{center} \textpf{gcc -static -nostdlib your\_file.s} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{\textpf{argc} and \textpf{argv} in Assembly}
+    When a process begins,
+    \begin{itemize}
+        \pause \item \textpf{argc} is written in memory as an 8-byte value at address \textpf{rsp}.
+        \pause \item \textpf{argv} begins at address \textpf{rsp + 8}, and ends at \textpf{rsp + 8 * argc}
+        \pause \item Just after \textpf{argv} ends, there will be an 8-byte 0 in memory. This can also be used to determine when you've reached the end of \textpf{argv}, instead of using \textpf{argc}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{\textpf{mov}ing to and from Memory}
+    \begin{itemize}
+        \pause \item The \textpf{mov} instruction can read data from memory registers, and from registers to memory.
+        \pause \item To read 1 byte from memory at the address contained in \textpf{rsp} into the \textpf{al} register, you would use \textpf{mov al, BYTE PTR [rsp]}.
+        \pause \item To read 2 bytes from memory at the address contained in \textpf{rsp} into the \textpf{ax} register, you would use \textpf{mov ax, WORD PTR [rsp]}.
+        \pause \item To read 4 bytes from memory at the address contained in \textpf{rsp} into the \textpf{eax} register, you would use \textpf{mov eax, DWORD PTR [rsp]}.
+        \pause \item To read 8 bytes from memory at the address contained in \textpf{rsp} into the \textpf{rax} register, you would use \textpf{mov rax, QWORD PTR [rsp]}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity: Implement \textpf{echo} in Assembly.}
+    \begin{itemize}
+        \item \textpf{echo} is a standard Unix program that writes each of its command-line arguments to \textpf{stdout}, separated by a space, then exits 0.
+        \item Implement \textpf{echo} in assembly
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Activity: Implement \textpf{cat} in Assembly.}
+    Don't worry; this code will be reusable in the homework assignment that I will release today :)
+\end{frame}
+
+\end{document}
