@@ -16,6 +16,9 @@ and running
 ```
 should give exactly the same output, byte-for-byte.
 
+Your program should not use libc at all.
+That is, you should define `_start`, and compile with `-nostdlib` and `-static`.
+
 ### Notes:
 - You don't need to support any of the command-line options that `hexdump` can take.
 - You don't need to error-check your `read` and `write` syscalls. Just assume that they worked.
