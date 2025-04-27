@@ -22,6 +22,7 @@ That is, you should define `_start`, and compile with `-nostdlib` and `-static`.
 ### Notes:
 - You don't need to support any of the command-line options that `hexdump` can take.
 - You don't need to error-check your `read` and `write` syscalls. Just assume that they worked.
+- You don't need to support files more than $2^{32}-1$ bytes long.
 
 # Grading
 
