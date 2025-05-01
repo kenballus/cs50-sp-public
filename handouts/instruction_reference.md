@@ -10,7 +10,7 @@ This is a reference for **Intel syntax** x86 assembly.
 
 The following are general-purpose 64-bit registers that you can use in your calculations: `rax`, `rbx`, `rcx`, `rdx`, `rdi`, `rsi`, `r8`, `r9`, ..., `r15`.
 
-The low 16 bits of each of these registers is available under the following names: `eax`, `ebx`, `ecx`, `edx`, `edi`, `esi`, `r8d`, `r9d`, ..., `r15d`.
+The low 32 bits of each of these registers is available under the following names: `eax`, `ebx`, `ecx`, `edx`, `edi`, `esi`, `r8d`, `r9d`, ..., `r15d`.
 
 The low 16 bits of each of these registers is available under the following names: `ax`, `bx`, `cx`, `dx`, `di`, `si`, `bp`, `r8w`, `r9w`, ..., `r15w`.
 
