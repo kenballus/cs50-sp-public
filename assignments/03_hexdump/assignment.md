@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 4: `hexdump_c`, Due Friday, May 2
+# Assignment 03: `hexdump_c`, Due Friday, May 2
 
 In this assignment, your task is to write a Linux x86_64 assembly program named `hexdump_c` that behaves exactly like `hexdump -C`.
 
