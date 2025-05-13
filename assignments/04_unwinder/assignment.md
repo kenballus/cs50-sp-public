@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 04: `unwind`
+# Assignment 04: `unwind`, Due Friday, May 9
 
 Your task in this assignment is to write an ABI-compliant function `unwind` in x86-64 assembly that prints a backtrace to stdout.
 That is, your function should print all of the saved return addresses on the stack, separated by newlines, in hex, prefixed with "`0x`", and padded with `0`s to 16 characters in length (18, if you count the "`0x`").
