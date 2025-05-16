@@ -59,7 +59,7 @@ geometry: margin=1in
     - Purpose: Opens `some_file` for editing in the `nano` text editor.
 ### `cat some_file`
     - Purpose: Displays the content of `some_file`.
-### `batcat some_file`
+### `bat some_file`
     - Purpose: Displays the content of `some_file` with syntax highlighting.
 ### `less some_file`
     - Purpose: Displays the content of `some_file` in a scrolling terminal interface.
@@ -82,9 +82,9 @@ geometry: margin=1in
             - Specifies the input file
         - `-o some_output_file.pdf`
             - Specifies the output file
-### `pdflatex`:
+### `lualatex`:
     - Purpose: Compiles LaTeX documents to PDF.
-    - Example: `pdflatex todays_class_slides.tex`
+    - Example: `lualatex todays_class_slides.tex`
 
 ## C Programming
 

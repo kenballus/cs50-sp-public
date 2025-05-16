@@ -2,17 +2,17 @@
 geometry: margin=1in
 ---
 
-# Assignment 03: `hexdump_c`, Due Friday, May 2
+# Assignment 03: `hexdump`, Due Friday, May 2
 
-In this assignment, your task is to write a Linux x86_64 assembly program named `hexdump_c` that behaves exactly like `hexdump -C`.
+In this assignment, your task is to write a Linux x86_64 assembly program named `hexdump` that behaves exactly like `hexdump`.
 
 That is, for any sequence of files `f1 f2 f3 f4`, running
 ```bash
-hexdump -C f1 f2 f3 f4
+hexdump f1 f2 f3 f4
 ```
 and running 
 ```bash
-./hexdump_c f1 f2 f3 f4
+./hexdump f1 f2 f3 f4
 ```
 should give exactly the same output, byte-for-byte.
 
