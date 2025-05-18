@@ -92,7 +92,7 @@ LD_PRELOAD=/the/path/to/your/malloc.so ls
 
 ## Debugging
 
-When debugging your `malloc` in `gdb`, you'll need to set `LD_PRELOAD` using the following `gdb` command:
+When debugging your `malloc` in `gdb`, you'll need to set `LD_PRELOAD` before running your program using the following `gdb` command:
 ```
 (gdb) set environment LD_PRELOAD=/the/path/to/your/malloc.so
 ```
