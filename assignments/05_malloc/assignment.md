@@ -64,6 +64,7 @@ Be aware of the following edge cases:
 2. `realloc(NULL, n)` should be equivalent to `malloc(n)`.
 3. `realloc(p, 0)` should be equivalent to `free(p)`.
 4. Technically, `reallocarray` and `calloc` should check for integer overflow, but I won't be testing this.
+5. Many libc functions call `malloc` internally. To avoid infinite recursion, you should avoid calling most libc functions inside of your `malloc`.
 
 There may be more edge cases to consider. Be sure to thoroughly read `man 3 malloc`.
 
