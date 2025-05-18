@@ -81,13 +81,20 @@ gcc test.c
 ```
 3. Run `a.out`, substituting the real `malloc` with your own with
 ```bash
-LD_PRELOAD=./malloc.so ./a.out
+LD_PRELOAD=/the/path/to/your/malloc.so ./a.out
 ```
 
 Also feel free to test your `malloc` implementation on real binaries installed on the system.
 For example, to run `ls` using your `malloc` instead of the default system `malloc`, run
 ```bash
-LD_PRELOAD=./malloc.so ls
+LD_PRELOAD=/the/path/to/your/malloc.so ls
+```
+
+## Debugging
+
+When debugging your `malloc` in `gdb`, you'll need to set `LD_PRELOAD` using the following `gdb` command:
+```
+(gdb) set environment LD_PRELOAD=/the/path/to/your/malloc.so
 ```
 
 ## What to Submit
