@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 6: `malloc`, Due Tuesday, May 20
+# Assignment 6: `malloc`, Due Thursday, May 22
 
 In this assignment, you are tasked with implementing `malloc`, `calloc`, `realloc`, `reallocarray`, and `free` using `mmap` and `munmap`.
 
