@@ -72,7 +72,7 @@ There may be more edge cases to consider. Be sure to thoroughly read `man 3 mall
 
 0. Compile your `malloc` source code into a dynamic library with
 ```bash
-gcc -shared malloc.c -o malloc.so
+gcc -fPIC -shared malloc.c -o malloc.so
 ```
 1. Write a `test.c` that calls `malloc`, `free`, `calloc`, `realloc`, and/or `reallocarray` just like any other program.
 2. Compile it with
