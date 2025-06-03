@@ -2,7 +2,7 @@
 geometry: margin=1in
 ---
 
-# Assignment 7: CHIP-8 Umulator, Due Tuesday, June 10
+# Assignment 7: CHIP-8 Emulator, Due Tuesday, June 10
 
 In this assignment, you are tasked with implementing an emulator for the CHIP-8, a fantasy video game console.
 
