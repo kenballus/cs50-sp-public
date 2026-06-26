@@ -104,31 +104,4 @@
     We need to reboot \textpf{plink} :)
 \end{frame}
 
-\begin{frame}[fragile]{Race Conditions}
-    \begin{itemize}
-        \pause \item A \textit{race condition} occurs when a program behaves unpredictably due to simultaneously-executing elements.
-        \pause \item Race conditions can cause lots of problems. Never write programs with race conditions.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Activity}
-    Using \textit{fork}, write a program with a race condition :)
-\end{frame}
-
-\begin{frame}[fragile]{Avoiding Race Conditions}
-    \begin{itemize}
-        \pause \item How do you avoid race conditions between processes?
-            \begin{itemize}
-                \pause \item \textpf{sleep}ing (not very effective)
-                \pause \item \textpf{wait}ing (a little more effective)
-                \pause \item \textpf{IPC} (can be very effective)
-            \end{itemize}
-        \pause \item We will discuss a few different IPC mechanisms in a few weeks.
-    \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Activity}
-    Fix the race condition in your program from earlier.
-\end{frame}
-
 \end{document}
